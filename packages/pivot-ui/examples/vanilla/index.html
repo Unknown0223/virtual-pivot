@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SalecPivot — CDN embed (WDR-style API)</title>
+    <link rel="stylesheet" href="../../dist/cdn/salec-pivot.css" />
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        background: #f4f4f5;
+      }
+      .banner {
+        padding: 12px 16px;
+        background: #18181b;
+        color: #fafafa;
+        font-size: 14px;
+      }
+      .banner code {
+        background: #27272a;
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+      #pivot {
+        min-height: 560px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="banner">
+      Masofaviy embed — <code>new SalecPivot({ container, report })</code>
+      (build: <code>npm run build --workspace=@salec/pivot-ui</code>)
+    </div>
+    <div id="pivot"></div>
+    <script src="../../dist/cdn/salec-pivot.min.js"></script>
+    <script>
+      const pivot = new SalecPivot({
+        container: "#pivot",
+        toolbar: true,
+        builder: true,
+        locale: "uz",
+        report: {
+          dataSource: {
+            data: [
+              { Country: "UZ", Category: "A", Price: 1200 },
+              { Country: "KZ", Category: "B", Price: 800 },
+              { Country: "UZ", Category: "B", Price: 450 },
+              { Country: "TJ", Category: "A", Price: 600 }
+            ]
+          },
+          slice: {
+            rows: ["Country"],
+            columns: ["Category"],
+            values: [{ fieldId: "Price", aggregation: "SUM" }],
+            reportFilters: [],
+            filters: []
+          }
+        },
+        onReady: function () {
+          console.log("SalecPivot ready", SalecPivot.version);
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "virtual-pivot",
+  "private": true,
+  "version": "0.2.0",
+  "description": "Clean-room Virtual Pivot — engine + UI + CDN embed (SalecPivot)",
+  "workspaces": [
+    "packages/pivot-engine",
+    "packages/pivot-ui"
+  ],
+  "scripts": {
+    "build": "npm run build -w @salec/pivot-engine && npm run build -w @salec/pivot-ui",
+    "build:engine": "npm run build -w @salec/pivot-engine",
+    "build:ui": "npm run build -w @salec/pivot-ui",
+    "test": "npm run test -w @salec/pivot-engine",
+    "typecheck": "npm run typecheck -w @salec/pivot-ui"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Unknown0223/virtual-pivot.git"
+  },
+  "license": "MIT",
+  "author": "Unknown0223"
+}

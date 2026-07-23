@@ -1,0 +1,21 @@
+node_modules/
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+coverage/
+.turbo/
+*.tsbuildinfo
+**/*.map
+
+# Lib intermediate (CDN embed files under dist/cdn/salec-pivot.* are kept)
+packages/pivot-ui/dist/chunks/
+packages/pivot-ui/dist/index.js
+packages/pivot-ui/dist/index.cjs
+packages/pivot-ui/dist/index.d.ts
+packages/pivot-ui/dist/index.d.ts.map
+packages/pivot-ui/dist/assets/
+packages/pivot-ui/dist/cdn/pivot.js
+packages/pivot-ui/dist/cdn/pivot.cjs
+packages/pivot-ui/dist/cdn/assets/
