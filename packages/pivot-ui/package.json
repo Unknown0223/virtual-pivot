@@ -25,9 +25,7 @@
     "**/*.css"
   ],
   "scripts": {
-    "build": "vite build && tsc -p tsconfig.build.json --emitDeclarationOnly && vite build --config vite.cdn.config.ts",
-    "build:lib": "vite build && tsc -p tsconfig.build.json --emitDeclarationOnly",
-    "build:cdn": "vite build --config vite.cdn.config.ts",
+    "build": "vite build && tsc -p tsconfig.build.json --emitDeclarationOnly",
     "dev": "vite build --watch",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
@@ -76,9 +74,6 @@
       "./cdn": {
         "import": "./dist/cdn/pivot.js",
         "require": "./dist/cdn/pivot.cjs"
-      },
-      "./cdn/embed": {
-        "default": "./dist/cdn/salec-pivot.min.js"
       }
     }
   }

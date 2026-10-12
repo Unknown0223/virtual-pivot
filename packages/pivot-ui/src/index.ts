@@ -1,10 +1,4 @@
 export { PivotApp, type PivotAppProps, type PivotAppOptions } from "./PivotApp.js";
-export {
-  SalecPivot,
-  type SalecPivotOptions,
-  type SalecPivotReport
-} from "./embed/SalecPivot.js";
-export { inferFieldsFromData } from "./embed/inferFields.js";
 export { PivotTable } from "./components/PivotTable.js";
 export { PivotBuilder } from "./components/PivotBuilder.js";
 export { PivotChart } from "./components/PivotChart.js";

@@ -37,10 +37,6 @@ export type PivotAppOptions = {
   className?: string;
   style?: CSSProperties;
   drillColumnIds?: string[];
-  /** Default true — hide for compact embeds */
-  showToolbar?: boolean;
-  /** Default true — field builder side panel */
-  showBuilder?: boolean;
 };
 
 export type PivotAppProps = {
@@ -64,8 +60,6 @@ export function PivotApp({ data, fields, config: initialConfig, onConfigChange, 
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<HTMLDivElement>(null);
   const drillThroughEnabled = options?.drillThrough === true;
-  const showToolbar = options?.showToolbar !== false;
-  const showBuilder = options?.showBuilder !== false;
   const theme = resolveThemeTokens(options?.theme ?? "default");
 
   const {
@@ -156,74 +150,65 @@ export function PivotApp({ data, fields, config: initialConfig, onConfigChange, 
       style={{ ...theme.cssVars, ...options?.style } as CSSProperties}
       data-theme={options?.theme ?? "default"}
     >
-      {showToolbar ? (
-        <PivotToolbar
-          viewMode={viewMode}
-          onViewModeChange={setViewMode}
-          onExpandAll={expandAll}
-          onCollapseAll={collapseAll}
-          onReset={resetConfig}
-          onExportExcel={() => {
-            if (!confirmLargeExport()) return;
-            void exportExcel(pivotData, { expandedRows });
-          }}
-          onExportPdf={() => {
-            if (!confirmLargeExport()) return;
-            void exportPdf(pivotData, { expandedRows });
-          }}
-          onExportHtml={() => {
-            if (!confirmLargeExport()) return;
-            void exportHtml(pivotData, { expandedRows });
-          }}
-          onExportChartPng={() => void exportChartPng(chartRef.current)}
-          onExportCsv={() => {
-            if (!confirmLargeExport()) return;
-            void exportCsv(pivotData, { expandedRows });
-          }}
-          exportDisabled={!pivotData}
-          chartExportDisabled={!chartOk || viewMode !== "chart"}
-          isExporting={isExporting}
-          exportingFormat={exportFormat}
-          activeFilterCount={activeFilterCount}
-          onClearFilters={clearAllFilters}
-          showColumnTotals={config.options.showColumnTotals}
-          onToggleColumnTotals={toggleColumnTotals}
-          isFullscreen={isFullscreen}
-          onToggleFullscreen={() => {
-            const el = containerRef.current;
-            if (!el) return;
-            if (!document.fullscreenElement) {
-              void el.requestFullscreen?.();
-              setIsFullscreen(true);
-            } else {
-              void document.exitFullscreen?.();
-              setIsFullscreen(false);
-            }
-          }}
-        />
-      ) : null}
+      <PivotToolbar
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
+        onExpandAll={expandAll}
+        onCollapseAll={collapseAll}
+        onReset={resetConfig}
+        onExportExcel={() => {
+          if (!confirmLargeExport()) return;
+          void exportExcel(pivotData, { expandedRows });
+        }}
+        onExportPdf={() => {
+          if (!confirmLargeExport()) return;
+          void exportPdf(pivotData, { expandedRows });
+        }}
+        onExportHtml={() => {
+          if (!confirmLargeExport()) return;
+          void exportHtml(pivotData, { expandedRows });
+        }}
+        onExportChartPng={() => void exportChartPng(chartRef.current)}
+        onExportCsv={() => {
+          if (!confirmLargeExport()) return;
+          void exportCsv(pivotData, { expandedRows });
+        }}
+        exportDisabled={!pivotData}
+        chartExportDisabled={!chartOk || viewMode !== "chart"}
+        isExporting={isExporting}
+        exportingFormat={exportFormat}
+        activeFilterCount={activeFilterCount}
+        onClearFilters={clearAllFilters}
+        showColumnTotals={config.options.showColumnTotals}
+        onToggleColumnTotals={toggleColumnTotals}
+        isFullscreen={isFullscreen}
+        onToggleFullscreen={() => {
+          const el = containerRef.current;
+          if (!el) return;
+          if (!document.fullscreenElement) {
+            void el.requestFullscreen?.();
+            setIsFullscreen(true);
+          } else {
+            void document.exitFullscreen?.();
+            setIsFullscreen(false);
+          }
+        }}
+      />
 
-      <div
-        className={cn(
-          "grid flex-1 gap-3 pivot-mobile-stack",
-          showBuilder ? "lg:grid-cols-[280px_1fr]" : "lg:grid-cols-1"
-        )}
-      >
-        {showBuilder ? (
-          <PivotBuilder
-            fields={fields}
-            config={tableConfig}
-            rawData={data}
-            onAddField={addField}
-            onRemoveField={removeField}
-            onUpdateAggregation={updateValueAggregation}
-            onSetFilter={setFilter}
-            onAddCalculatedPreset={addCalculatedPreset}
-            onRemoveCalculatedMeasure={removeCalculatedMeasure}
-            onReorderFields={reorderFields}
-            onReorderValueFields={reorderValueFields}
-          />
-        ) : null}
+      <div className="grid flex-1 gap-3 lg:grid-cols-[280px_1fr] pivot-mobile-stack">
+        <PivotBuilder
+          fields={fields}
+          config={tableConfig}
+          rawData={data}
+          onAddField={addField}
+          onRemoveField={removeField}
+          onUpdateAggregation={updateValueAggregation}
+          onSetFilter={setFilter}
+          onAddCalculatedPreset={addCalculatedPreset}
+          onRemoveCalculatedMeasure={removeCalculatedMeasure}
+          onReorderFields={reorderFields}
+          onReorderValueFields={reorderValueFields}
+        />
         <div className="min-h-0 min-w-0 overflow-x-auto overflow-y-auto rounded-lg border border-[var(--pivot-border,#e4e4e7)] bg-[var(--pivot-surface,#fff)]">
           {viewMode === "table" && pivotData ? (
             <PivotTable

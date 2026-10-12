@@ -40,7 +40,6 @@ export default defineConfig({
     },
     cssCodeSplit: false,
     sourcemap: true,
-    // CDN IIFE is written afterward into dist/cdn/ (see vite.cdn.config.ts)
     emptyOutDir: true
   },
   worker: {
